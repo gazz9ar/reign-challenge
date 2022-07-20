@@ -1,0 +1,42 @@
+.container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.button-toggle-container {
+		width: (98*2)px;
+		display: inline-block;
+		height: 31px;
+		// padding: 3px 17px 0 17px;
+		border: solid 1px #d6d6d6;
+		border-radius: 2px;
+		
+
+		.btn-toggle{
+			width: 98px;
+			height: 31px;
+			padding: 3px 11px 0 11px;
+			border: 2px solid #ccc;
+			
+			cursor:pointer;
+			.button-toggle-text {
+				width: 19px;
+				height: 28px;
+				font-family: Roboto;
+				font-size: 16px;
+				font-weight: 500;
+				font-stretch: normal;
+				font-style: normal;
+				line-height: 1.75;
+				letter-spacing: normal;
+				text-align: center;
+				color: #606060;
+			}
+		}
+		
+	}
+}
+.selected-toggle {
+	border-color: #1797ff !important;
+}
