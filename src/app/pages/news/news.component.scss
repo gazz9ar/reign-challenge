@@ -1,0 +1,133 @@
+* {
+	font-family: Roboto;
+}
+.container {
+	padding: 0 130px;
+	.dropdownCategories {
+		width: 240px;
+		height: 32px;	
+		// padding: 5px 12px 5px 12px;
+		border-radius: 4px;
+		border: solid 1px #2e2e2e;
+		background-color: #fff;
+		z-index: 99;
+		cursor: pointer;
+	  }
+}
+.items-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	width: 240px;
+	height: 139px;
+	margin: 0 0 0 1px;
+	// padding: 15px 144px 12px 10px;
+	box-shadow: 0 2px 2px 0 #dad8d8;
+	background-color: #fff;
+	z-index: 918;
+	position: absolute;
+	cursor: pointer;
+}
+.categories {
+	width: 50%;
+    height: 22px;  
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    color: #343434;
+    margin: 10px 44px;
+}
+.categoriesValue {
+	margin-left: 10px;
+}
+#categoriesDefault {
+	margin: 0 10px;
+    width: 100%;
+}
+.categoriesDefault-container {	
+	width: 95%;
+	height: 100%;	
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.categorieImg {
+	width: 24px;
+	height: 24px;
+	// margin: 1px 13px 62px 0;
+	// object-fit: contain;
+}
+.categorie-container {
+	display: flex;
+    justify-content: center;
+    align-items: center;   
+    width: 100%;
+
+	&:hover {
+		background-color: #eaeaea;
+	}
+}
+.new {
+	width: 550px;
+	height: 90px;	
+	padding: 0 0 0 26px;
+	opacity: 0.8;
+	border-radius: 6px;
+	border: solid 2px #979797;
+	background-color: #fff;
+	margin-top: 37px;
+	display: flex;
+}
+.title-container {
+	width: 82%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	margin-right: 20px;
+}
+.like-container {	
+    width: 18%;
+	background-color: rgba(96,96,96,0.06);
+  	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.time {
+	color: #767676;
+	width: 107px;
+ 	 height: 13px;
+	 font-size: 12px;
+	 font-family: Roboto;
+}
+.clock {
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+}
+.title {
+
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  color: #6b6b6b;
+  width: 100%;
+  font-family: Roboto;
+}
+.time-container {
+	
+    margin-bottom: 9px;
+
+}
+.like-button {
+	width: 24px;
+	height: 22px;
+	object-fit: contain;
+}

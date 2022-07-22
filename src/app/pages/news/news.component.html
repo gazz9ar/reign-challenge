@@ -1,4 +1,46 @@
+<!-- TOGGLE: ALL / MY FAVS -->
 <app-button-toggle></app-button-toggle>
 
 
-<h1>content</h1>
+<div class="container">
+	<!-- SELECT FILTER -->
+	<div name="categories" class="dropdownCategories" (click)="showList()">
+		<div class="categoriesDefault-container" >
+			<span class="categories" id="categoriesDefault"> {{selected}}  	</span>
+			<p><i class="arrow down"></i></p>
+		</div>
+	
+	</div>
+	<div class="items-container"
+	[ngClass]="{'d-none': !showCategories}">
+		<div class="categorie-container" *ngFor="let cat of categories" (click)="changeSelected(cat.name)">
+			<img src="assets/{{cat.fileName}}.jpg" 
+			[alt]="cat.fileName"			
+			class="categorieImg">			
+			<span class="categories categoriesValue">		
+				{{cat.name}}
+			</span>		
+		</div>
+	
+	</div>
+
+	<!-- NEWS -->
+	<div class="new">
+		<div class="title-container">
+			<div class="time-container">
+				<img src="assets/clock.svg" alt="time" class="clock">
+				<span class="time">3 hours age</span>
+			</div>
+			<div class="title">			
+				Yes, React is taking over front-end development. The question is why.
+			
+			</div>
+		</div>
+	
+		<div class="like-container">			
+			<img src="assets/like.svg" alt="Like button" class="like-button" (click)="like()" >
+		</div>
+	</div>
+</div>
+
+
