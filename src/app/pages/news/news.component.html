@@ -13,8 +13,10 @@
 	</div>
 	<div class="items-container"
 	[ngClass]="{'d-none': !showCategories}">
-		<div class="categorie-container" *ngFor="let cat of categories" (click)="changeSelected(cat.name)">
-			<img src="assets/{{cat.fileName}}.jpg" 
+		<div class="categorie-container" 
+		*ngFor="let cat of categories" 
+		(click)="changeSelected(cat.name)">
+			<img src="assets/{{cat.fileName}}.png" 
 			[alt]="cat.fileName"			
 			class="categorieImg">			
 			<span class="categories categoriesValue">		
@@ -23,24 +25,36 @@
 		</div>
 	
 	</div>
-
 	<!-- NEWS -->
-	<div class="new">
-		<div class="title-container">
-			<div class="time-container">
-				<img src="assets/clock.svg" alt="time" class="clock">
-				<span class="time">3 hours age</span>
+	<div class="news-container" >
+		<a class="new" *ngFor="let new of news" 
+		id="new-{{new.objectID}}" 		
+		>
+			<div class="title-container">
+				<div class="time-container">
+					<img src="assets/clock.svg" alt="time" class="clock">
+					<span class="time"> {{ relativeDays(new.created_at) }} </span>
+				</div>
+				<div class="title">			
+					{{new.story_title ?  new.story_title : new.title}}				
+				</div>
 			</div>
-			<div class="title">			
-				Yes, React is taking over front-end development. The question is why.
-			
+		
+			<div class="like-container"
+			id="likeContainer-{{new.objectID}}">	
+				<div class="like-button"
+				(click)="like(new)"
+				id="like-{{new.objectID}}"
+				[ngClass]="{'like': new.like,
+							'no-like': !new.like}"
+							>
+				</div>		
+				<!-- <img src="assets/like.svg" alt="Like button" class="like-button" (click)="unlike(new)" *ngIf="new.like">
+				<img src="assets/no-like.svg" alt="Like button" class="like-button" (click)="like(new)" *ngIf="!new.like"> -->
 			</div>
-		</div>
-	
-		<div class="like-container">			
-			<img src="assets/like.svg" alt="Like button" class="like-button" (click)="like()" >
-		</div>
+		</a>
 	</div>
+	
 </div>
 
 
