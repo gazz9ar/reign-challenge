@@ -36,6 +36,7 @@
 		[infiniteScrollThrottle]="1000"
 		(scrolled)="onScroll()"
 		class="infinite-scroll news-container">
+		<div *ngIf="this.toggle === 'all'" class="news-container">
 			<a class="new" *ngFor="let new of news" 
 			id="new-{{new.objectID}}" 		
 			>
@@ -62,12 +63,44 @@
 					<img src="assets/no-like.svg" alt="Like button" class="like-button" (click)="like(new)" *ngIf="!new.like"> -->
 				</div>
 			</a>	
+		</div>
+			
+
+		<!-- MY FAVES -->
+		<div *ngIf="this.toggle === 'favs'" class="news-container">
+			<a class="new" *ngFor="let new of favs" 
+			id="new-{{new.objectID}}" 		
+			>
+				<div class="title-container">
+					<div class="time-container">
+						<img src="assets/clock.svg" alt="time" class="clock">
+						<span class="time"> {{ relativeDays(new.created_at) }} </span>
+					</div>
+					<div class="title">			
+						{{new.story_title ?  new.story_title : new.title}}				
+					</div>
+				</div>
+			
+				<div class="like-container"
+				id="likeContainer-{{new.objectID}}">	
+					<div class="like-button"
+					(click)="like(new)"
+					id="like-{{new.objectID}}"
+					[ngClass]="{'like': new.like,
+								'no-like': !new.like}"
+								>
+					</div>				
+				</div>
+			</a>	
+		</div>
+
+		<div *ngIf="this.toggle === 'favs' && favs.length === 0" class="no-favs">
+			You have no favorite news!			
+		</div>
 
 			
 		</div>
-		<div *ngIf="!finished && !loading" class="spinner">
-			
-		</div>
+		<div *ngIf="!finished && !loading && toggle === 'all' && !newEntry" class="spinner"></div>
 		<div *ngIf="finished">
 			There's no news left...
 		</div>

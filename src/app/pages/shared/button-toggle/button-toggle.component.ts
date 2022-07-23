@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-button-toggle',
@@ -8,7 +8,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class ButtonToggleComponent implements OnInit {
 
 	public all:boolean = true;
-	@Output() toggle = new EventEmitter<string>();
+	@Output() toggle = new EventEmitter<string>();	
   constructor() { }
 
   ngOnInit(): void {

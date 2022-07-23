@@ -56,8 +56,9 @@ export class NewsComponent implements OnInit {
 		page:this.currentPage
 	}	
 	// this.currentPage === 0 ? this.loading = true : this.loading = false;
-	if (filter) {
-		if (!resetData) {			
+	if (filter) {				
+		if (!resetData) {	
+			console.log(queryScroll);		
 			this.newsService.getNews(queryScroll)
 			.pipe(
 				finalize(()=> {																		
@@ -81,21 +82,22 @@ export class NewsComponent implements OnInit {
 				this.news = resp.hits;	
 			});
 		}
-		
 	} else {
 		this.newEntry = true;
 		// do nothing: first time *maybe welcome sign
 	}	
-
   }
 
   changeToggle(type:string) {
-	this.toggle = type;
+	this.toggle = type;	
   }
   public onScroll(): void {			
-	this.currentPage++;
-	this.loading = false;
-	this.loadData(false,this.selected);
+	if (this.toggle === 'all') {
+		this.currentPage++;
+		this.loading = false;
+		this.loadData(false,this.selected);
+	}
+	
   }
 
   private checkForFilter(): void {	
@@ -133,24 +135,29 @@ export class NewsComponent implements OnInit {
 	}	
   }
   public changeSelected(categorie:string): void {		
-	if (this.newEntry) this.newEntry = false;
-	this.news = [];
-	this.selected = categorie;
+	if (this.newEntry) this.newEntry = false;	
 	this.showCategories = false;
-	localStorage.setItem('filter',this.selected);
-	this.loadData(true,this.selected);
+	if (this.selected === categorie && this.currentPage === 0) {
+		// do nothing
+	} else {
+		this.news = [];
+		this.selected = categorie;	
+		localStorage.setItem('filter',this.selected);
+		this.loadData(true,this.selected);
+	}
+	
   }
 
   public like(neww:New) {
 	
 	if (neww.like) {		
-		this.favs = this.favs.filter( fav => fav.objectID !== neww.objectID);
-		localStorage.setItem('favs', JSON.stringify(this.favs)); 
+		this.favs = this.favs.filter( fav => fav.objectID !== neww.objectID);		
 		neww.like = false;
+		localStorage.setItem('favs', JSON.stringify(this.favs)); 
 	} else {
-		this.favs.push(neww);
-		localStorage.setItem('favs', JSON.stringify(this.favs)); 		
+		this.favs.push(neww);				
 		neww.like = true;
+		localStorage.setItem('favs', JSON.stringify(this.favs)); 
 	}	
   }
   public unlike(neww:New) {
@@ -169,10 +176,19 @@ export class NewsComponent implements OnInit {
 			idNewSelected = event.target.id.substring(4,event.target.id.length);
 		} else {
 			idNewSelected = event.target.id.substring(14, event.target.id.length);
-		}				
-		let openNew = this.news.find( (neww) => {			
-			return neww.objectID == idNewSelected;
-		});
+		}
+		let openNew:New;			
+		if (this.toggle === 'all') {
+			openNew = this.news.find( (neww) => {	
+				console.log(neww.objectID,idNewSelected )		
+				return neww.objectID == idNewSelected;
+			});
+		} else {
+			openNew = this.favs.find( (neww) => {	
+				console.log(neww.objectID,idNewSelected )		
+				return neww.objectID == idNewSelected;
+			});
+		}		
 		window.open(openNew.story_url,'_blank');		
 	} else {
 		// do not open tab		
