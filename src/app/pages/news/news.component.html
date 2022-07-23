@@ -1,5 +1,5 @@
 <!-- TOGGLE: ALL / MY FAVS -->
-<app-button-toggle></app-button-toggle>
+<app-button-toggle (toggle)="changeToggle($event)"></app-button-toggle>
 
 
 <div class="container">
@@ -25,7 +25,7 @@
 		</div>
 	
 	</div>
-	<div class="spinner-container" *ngIf="loading">
+	<div class="spinner-container" *ngIf="loading && !newEntry">
 		<div class="spinner"></div>
 	</div>
 	

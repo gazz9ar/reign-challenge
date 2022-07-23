@@ -2,10 +2,13 @@
 	<div class="button-toggle-container"
 	>
 		<button class="btn-toggle"
-		[ngClass]="{'selected-toggle': true}">
+		[ngClass]="{'selected-toggle': all}"
+		(click)="changeNews('all')">
 			<span class="button-toggle-text">All</span>
 		</button>
-		<button class="btn-toggle">
+		<button class="btn-toggle"
+		[ngClass]="{'selected-toggle': !all}"
+		(click)="changeNews('favs')">
 			<span class="button-toggle-text">
 			My faves</span>
 		</button>

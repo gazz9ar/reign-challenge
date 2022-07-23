@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { NewsServiceService } from '../shared/services/news-service.service';
 import { New } from './shared/models/New';
 import { ApiResponse } from './shared/models/ApiResponse';
@@ -33,8 +33,11 @@ export class NewsComponent implements OnInit {
 	public clickFav:boolean = false;
 	public finished:boolean = false;
 	public loading:boolean = false;
+	public newEntry:boolean = false;
 	public count:number = 12;
-	public currentPage:number = 0;
+	public currentPage:number = 0;	
+	public toggle:string = 'all';
+
   constructor(
 	private newsService:NewsServiceService,
 	private _eref: ElementRef
@@ -45,48 +48,70 @@ export class NewsComponent implements OnInit {
 	this.fillFavs();
   }
 
-  public loadData(filter?:string) {	
+  public loadData(resetData:boolean,filter?:string) {	
 	if (this.finished) return;
 	let queryScroll = {
 		filter:filter,
 		count:this.count,
 		page:this.currentPage
 	}	
-	this.currentPage === 0 ? this.loading = true : this.loading = false;
+	// this.currentPage === 0 ? this.loading = true : this.loading = false;
 	if (filter) {
-		this.newsService.getNews(queryScroll)
-		.pipe(
-			finalize(()=> {
-				if (this.currentPage === 0) this.loading = false;				
-				this.formatNews();
-			})
-		)		
-		.subscribe((resp:ApiResponse) => {
-			this.news.push(...resp.hits);		
-		});
+		if (!resetData) {			
+			this.newsService.getNews(queryScroll)
+			.pipe(
+				finalize(()=> {																		
+					this.formatNews();
+				})
+			)		
+			.subscribe((resp:ApiResponse) => {
+				this.news.push(...resp.hits);		
+			});
+		} else {		
+			this.currentPage = 0;
+			queryScroll.page = 0;		
+			this.newsService.getNews(queryScroll)
+			.pipe(
+				finalize(()=> {
+					this.loading = false;				
+					this.formatNews();
+				})
+			)		
+			.subscribe((resp:ApiResponse) => {
+				this.news = resp.hits;	
+			});
+		}
+		
 	} else {
+		this.newEntry = true;
 		// do nothing: first time *maybe welcome sign
 	}	
 
   }
 
-  public onScroll(): void {		
+  changeToggle(type:string) {
+	this.toggle = type;
+  }
+  public onScroll(): void {			
 	this.currentPage++;
 	this.loading = false;
-	this.loadData(this.selected);
+	this.loadData(false,this.selected);
   }
 
   private checkForFilter(): void {	
 	if (!localStorage.getItem('filter')) {
-		this.loadData();
+		this.loadData(true);
 	} else {
 		this.selected = localStorage.getItem('filter');
-		this.loadData(this.selected);
+		this.loadData(true,this.selected);
 	}	
   }
 
   private fillFavs(): void {
-	this.favs = JSON.parse(localStorage.getItem('favs'));
+	if (JSON.parse(localStorage.getItem('favs'))) {
+		this.favs = JSON.parse(localStorage.getItem('favs'));
+	} 
+	
   }
 
   public formatNews(): void {	
@@ -108,13 +133,16 @@ export class NewsComponent implements OnInit {
 	}	
   }
   public changeSelected(categorie:string): void {		
+	if (this.newEntry) this.newEntry = false;
+	this.news = [];
 	this.selected = categorie;
 	this.showCategories = false;
 	localStorage.setItem('filter',this.selected);
-	this.loadData(this.selected);
+	this.loadData(true,this.selected);
   }
 
-  public like(neww:New) {	
+  public like(neww:New) {
+	
 	if (neww.like) {		
 		this.favs = this.favs.filter( fav => fav.objectID !== neww.objectID);
 		localStorage.setItem('favs', JSON.stringify(this.favs)); 

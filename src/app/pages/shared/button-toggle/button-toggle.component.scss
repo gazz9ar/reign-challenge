@@ -16,10 +16,10 @@
 		.btn-toggle{
 			width: 98px;
 			height: 31px;
-			padding: 3px 11px -1px 11px;
-			border: 2px solid #ccc;
+			padding: 3px 11px -1px 11px;		
+			border: 1.6px solid #ccc;
+			cursor: pointer;			
 			
-			cursor:pointer;
 			.button-toggle-text {
 				width: 19px;
 				height: 28px;
@@ -34,9 +34,13 @@
 				color: #606060;
 			}
 		}
+
+		.selected-toggle {
+			border: 2px solid #1797ff !important;
+			border-color: #1797ff !important;
+			// border-right-color: #d6d6d6 !important;
+			box-shadow: 1px 1px 5px inset #9b9a9a;
+		}
 		
 	}
-}
-.selected-toggle {
-	border-color: #1797ff !important;
 }
