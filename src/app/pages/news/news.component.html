@@ -25,35 +25,55 @@
 		</div>
 	
 	</div>
+	<div class="spinner-container" *ngIf="loading">
+		<div class="spinner"></div>
+	</div>
+	
 	<!-- NEWS -->
 	<div class="news-container" >
-		<a class="new" *ngFor="let new of news" 
-		id="new-{{new.objectID}}" 		
-		>
-			<div class="title-container">
-				<div class="time-container">
-					<img src="assets/clock.svg" alt="time" class="clock">
-					<span class="time"> {{ relativeDays(new.created_at) }} </span>
+		<div infiniteScroll
+		[infiniteScrollDistance]="2"
+		[infiniteScrollThrottle]="1000"
+		(scrolled)="onScroll()"
+		class="infinite-scroll news-container">
+			<a class="new" *ngFor="let new of news" 
+			id="new-{{new.objectID}}" 		
+			>
+				<div class="title-container">
+					<div class="time-container">
+						<img src="assets/clock.svg" alt="time" class="clock">
+						<span class="time"> {{ relativeDays(new.created_at) }} </span>
+					</div>
+					<div class="title">			
+						{{new.story_title ?  new.story_title : new.title}}				
+					</div>
 				</div>
-				<div class="title">			
-					{{new.story_title ?  new.story_title : new.title}}				
+			
+				<div class="like-container"
+				id="likeContainer-{{new.objectID}}">	
+					<div class="like-button"
+					(click)="like(new)"
+					id="like-{{new.objectID}}"
+					[ngClass]="{'like': new.like,
+								'no-like': !new.like}"
+								>
+					</div>		
+					<!-- <img src="assets/like.svg" alt="Like button" class="like-button" (click)="unlike(new)" *ngIf="new.like">
+					<img src="assets/no-like.svg" alt="Like button" class="like-button" (click)="like(new)" *ngIf="!new.like"> -->
 				</div>
-			</div>
-		
-			<div class="like-container"
-			id="likeContainer-{{new.objectID}}">	
-				<div class="like-button"
-				(click)="like(new)"
-				id="like-{{new.objectID}}"
-				[ngClass]="{'like': new.like,
-							'no-like': !new.like}"
-							>
-				</div>		
-				<!-- <img src="assets/like.svg" alt="Like button" class="like-button" (click)="unlike(new)" *ngIf="new.like">
-				<img src="assets/no-like.svg" alt="Like button" class="like-button" (click)="like(new)" *ngIf="!new.like"> -->
-			</div>
-		</a>
+			</a>	
+
+			
+		</div>
+		<div *ngIf="!finished && !loading" class="spinner">
+			
+		</div>
+		<div *ngIf="finished">
+			There's no news left...
+		</div>
 	</div>
+	
+	
 	
 </div>
 

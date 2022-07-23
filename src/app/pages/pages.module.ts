@@ -9,7 +9,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { ButtonToggleComponent } from './shared/button-toggle/button-toggle.component';
 import { NewsServiceService } from './shared/services/news-service.service';
 import { StoryLinkDirective } from './shared/directives/story-link.directive';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @NgModule({
@@ -24,9 +24,11 @@ import { StoryLinkDirective } from './shared/directives/story-link.directive';
   imports: [
     CommonModule,
     PagesRoutingModule,	
+	InfiniteScrollModule
   ],
   providers:[
 	NewsServiceService
   ]
 })
 export class PagesModule { }
+

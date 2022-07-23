@@ -2,7 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { NewsServiceService } from '../shared/services/news-service.service';
 import { New } from './shared/models/New';
 import { ApiResponse } from './shared/models/ApiResponse';
-import { finalize, map } from 'rxjs';
+import { finalize } from 'rxjs';
+import * as _ from 'lodash'
 
 interface categoriesFilter {
 	id:number,
@@ -30,6 +31,10 @@ export class NewsComponent implements OnInit {
 	public news:New[] = [];
 	public favs:New[] = [];
 	public clickFav:boolean = false;
+	public finished:boolean = false;
+	public loading:boolean = false;
+	public count:number = 12;
+	public currentPage:number = 0;
   constructor(
 	private newsService:NewsServiceService,
 	private _eref: ElementRef
@@ -40,22 +45,35 @@ export class NewsComponent implements OnInit {
 	this.fillFavs();
   }
 
-  public loadData(filter?:string) {
+  public loadData(filter?:string) {	
+	if (this.finished) return;
+	let queryScroll = {
+		filter:filter,
+		count:this.count,
+		page:this.currentPage
+	}	
+	this.currentPage === 0 ? this.loading = true : this.loading = false;
 	if (filter) {
-		this.newsService.getNews(filter)
+		this.newsService.getNews(queryScroll)
 		.pipe(
 			finalize(()=> {
+				if (this.currentPage === 0) this.loading = false;				
 				this.formatNews();
 			})
 		)		
 		.subscribe((resp:ApiResponse) => {
-			this.news = resp.hits;
-			// console.log(this.news);
+			this.news.push(...resp.hits);		
 		});
 	} else {
 		// do nothing: first time *maybe welcome sign
 	}	
 
+  }
+
+  public onScroll(): void {		
+	this.currentPage++;
+	this.loading = false;
+	this.loadData(this.selected);
   }
 
   private checkForFilter(): void {	

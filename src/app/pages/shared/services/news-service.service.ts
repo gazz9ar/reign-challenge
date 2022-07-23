@@ -15,8 +15,8 @@ export class NewsServiceService {
   ) { }
 
 
-  public getNews(value:string): Observable<any> {
-    return this.http.get<any[]>(`${this.url}/search_by_date?query=${value}`).pipe(
+  public getNews(body:any): Observable<any> {
+    return this.http.get<any[]>(`${this.url}/search_by_date?query=${body.filter}&hitsPerPage=${body.count}&page=${body.page}`).pipe(
       map((res) => res),
       catchError(this.handleError)
     );
