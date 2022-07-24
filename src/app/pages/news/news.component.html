@@ -56,11 +56,8 @@
 					(click)="like(new)"
 					id="like-{{new.objectID}}"
 					[ngClass]="{'like': new.like,
-								'no-like': !new.like}"
-								>
-					</div>		
-					<!-- <img src="assets/like.svg" alt="Like button" class="like-button" (click)="unlike(new)" *ngIf="new.like">
-					<img src="assets/no-like.svg" alt="Like button" class="like-button" (click)="like(new)" *ngIf="!new.like"> -->
+								'no-like': !new.like}">
+					</div>						
 				</div>
 			</a>	
 		</div>
