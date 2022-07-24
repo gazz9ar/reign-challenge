@@ -40,7 +40,6 @@ export class NewsComponent implements OnInit {
 
   constructor(
 	private newsService:NewsServiceService,
-	private _eref: ElementRef
   ) { }
 
   ngOnInit(): void {		
