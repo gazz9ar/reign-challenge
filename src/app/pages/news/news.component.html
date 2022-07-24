@@ -43,7 +43,7 @@
 				<div class="title-container">
 					<div class="time-container">
 						<img src="assets/clock.svg" alt="time" class="clock">
-						<span class="time"> {{ relativeDays(new.created_at) }} </span>
+						<span class="time"> {{ relativeDays(new.created_at) }} by <strong>{{new.author}}</strong>  </span>
 					</div>
 					<div class="title">			
 						{{new.story_title ?  new.story_title : new.title}}				
